@@ -1,0 +1,31 @@
+version: '3.9' # docker-compose.ymlファイルの構文バージョン
+services:
+  # DB用コンテナ作成
+  db:
+    container_name: workout-db
+    # イメージの指定(docker-hubから直接流用)
+    image: 'mysql:8.0'
+    # DBデータ保持用のボリュームをバインド
+    volumes: 
+      - db_data:/var/lib/mysql
+    env_file:
+      - ./.env # 環境変数ファイルへのパス
+  # API用コンテナ作成
+  api:
+    container_name: workout-api
+    build: . # イメージのビルドに使用するDockerfileへの相対パス
+    volumes:
+    # バインドマウント
+      - type: bind 
+        source: ./app
+        target: /app
+    ports:
+      - 5050:5050
+    env_file:
+      - ./.env
+    # 依存するサービス名(先に起動させたいサービス)
+    depends_on:
+      - db
+# DBデータ保持用のボリューム
+volumes:
+  db_data:
