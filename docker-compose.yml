@@ -10,6 +10,8 @@ services:
       - db_data:/var/lib/mysql
     env_file:
       - ./.env # 環境変数ファイルへのパス
+    ports:
+      - 3306:3306
   # API用コンテナ作成
   api:
     container_name: workout-api
@@ -19,6 +21,7 @@ services:
       - type: bind 
         source: ./app
         target: /app
+      - ./db/migrations:/app/db/migrations
     ports:
       - 5050:5050
     env_file:
@@ -26,6 +29,8 @@ services:
     # 依存するサービス名(先に起動させたいサービス)
     depends_on:
       - db
+    environment:
+      - GOOSE_DIR=/app/db/migrations
 # DBデータ保持用のボリューム
 volumes:
   db_data:

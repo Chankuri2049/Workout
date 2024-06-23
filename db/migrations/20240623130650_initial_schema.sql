@@ -1,3 +1,4 @@
+-- +goose Up
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE IF NOT EXISTS users (
@@ -12,3 +13,6 @@ CREATE TABLE IF NOT EXISTS users (
 INSERT INTO users (user_id, user_name, age, gender) VALUES (UUID(), '田中太郎', 40, 'male');
 INSERT INTO users (user_id, user_name, age, gender) VALUES (UUID(),'小保方晴子', 30, 'female');
 INSERT INTO users (user_id, user_name, age, gender) VALUES (UUID(),'佐村河内守', 60, 'male');
+
+-- +goose Down
+DROP TABLE IF EXISTS users;
