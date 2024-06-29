@@ -14,6 +14,7 @@ COPY ./app/* ./
 # Airのバイナリをインストール
 RUN go install github.com/cosmtrek/air@v1.52.1
 RUN go install github.com/pressly/goose/v3/cmd/goose@latest
+RUN go install github.com/99designs/gqlgen@latest
 # /app/go.modに記載された依存関係の解決＋必要なパッケージのダウンロードを実行
 RUN go mod download
 # コンテナの公開するポートを指定
