@@ -1,0 +1,18 @@
+-- +goose Up
+DROP TABLE IF EXISTS exercises;
+CREATE TABLE exercises (
+    id VARCHAR(26) NOT NULL PRIMARY KEY COMMENT '種目ID',
+    user_id VARCHAR(26) COMMENT '会員ID',
+    exercise_name VARCHAR(255) NOT NULL COMMENT '種目名',
+    default_flag TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'デフォルトフラグ',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
+    created_by VARCHAR(26) NOT NULL COMMENT '作成者',
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
+    updated_by VARCHAR(26) NOT NULL COMMENT '更新者',
+    CONSTRAINT fk_e_u FOREIGN KEY (user_id) REFERENCES users(id)
+) COMMENT '種目';
+
+
+-- +goose Down
+ALTER TABLE exercises DROP FOREIGN KEY fk_e_u;
+DROP TABLE IF EXISTS exercises;

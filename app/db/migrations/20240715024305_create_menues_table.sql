@@ -1,0 +1,17 @@
+-- +goose Up
+DROP TABLE IF EXISTS menus;
+CREATE TABLE menus (
+    id VARCHAR(26) NOT NULL PRIMARY KEY COMMENT 'メニューID',
+    plan_id VARCHAR(26) NOT NULL COMMENT 'プランID',
+    title VARCHAR(255) NOT NULL COMMENT 'メニュータイトル',
+    display_order INT NOT NULL COMMENT '表示順',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
+    created_by VARCHAR(26) NOT NULL COMMENT '作成者',
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
+    updated_by VARCHAR(26) NOT NULL COMMENT '更新者',
+    CONSTRAINT fk_m_p FOREIGN KEY (plan_id) REFERENCES plans(id) 
+);
+
+-- +goose Down
+ALTER TABLE menus DROP FOREIGN KEY fk_m_p;
+DROP TABLE IF EXISTS menus;
