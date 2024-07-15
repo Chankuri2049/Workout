@@ -1,4 +1,4 @@
-version: '3.9' # docker-compose.ymlファイルの構文バージョン
+version: '3.9'
 services:
   # DB用コンテナ作成
   db:
@@ -21,7 +21,7 @@ services:
       - type: bind 
         source: ./app
         target: /app
-      - ./db/migrations:/app/db/migrations
+      - ./app/db/migrations:/app/db/migrations
     ports:
       - 5050:5050
     env_file:
