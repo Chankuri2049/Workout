@@ -1,0 +1,18 @@
+-- +goose Up
+DROP TABLE IF EXISTS plans;
+CREATE TABLE plans (
+    id VARCHAR(26) NOT NULL PRIMARY KEY COMMENT 'プランID',
+    user_id VARCHAR(26) NOT NULL COMMENT 'ユーザーID',
+    title VARCHAR(255) NOT NULL COMMENT 'プランタイトル',
+    description VARCHAR(255) COMMENT 'プラン内容',
+    display_order INT NOT NULL COMMENT '表示順',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
+    created_by VARCHAR(26) NOT NULL COMMENT '作成者',
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
+    updated_by VARCHAR(26) NOT NULL COMMENT '更新者',
+    CONSTRAINT fk_p_u FOREIGN KEY (user_id) REFERENCES users(id)
+) COMMENT 'プラン';
+
+-- +goose Down
+ALTER TABLE plans DROP FOREIGN KEY fk_p_u;
+DROP TABLE IF EXISTS plans;
